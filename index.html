@@ -459,12 +459,15 @@ item.signal +
 
 historyBox.appendChild(row);
 
-});function clearHistory(){
+}
+});
+}
+function clearHistory(){
   localStorage.removeItem("signalHistory");
   showHistory();
 }
 
-}function demoLogin(){
+function demoLogin(){
 
 const username =
 document.getElementById("username").value.trim();
