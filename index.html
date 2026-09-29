@@ -65,7 +65,24 @@ margin-bottom:15px;
 </head>
 
 <body>
+<div id="loginBox" class="panel">
 
+<h2>🔐 Welcome</h2>
+
+<p>Enter a demo username to continue.</p>
+
+<input
+id="username"
+type="text"
+placeholder="Username"
+style="width:100%;padding:12px;border-radius:10px;border:1px solid #263247;background:#080f1c;color:white;"
+>
+
+<button onclick="demoLogin()">
+Enter Dashboard
+</button>
+
+</div>
 <div class="container">
 
 <header>
@@ -402,6 +419,21 @@ historyBox.appendChild(row);
 
 });
 
+}function demoLogin(){
+
+const username =
+document.getElementById("username").value.trim();
+
+if(username === ""){
+
+alert("Please enter a username.");
+
+return;
+
+}
+
+document.getElementById("loginBox").style.display="none";
+
 }
 function loadMarkets(){
 
@@ -572,7 +604,7 @@ document.getElementById(
 
 }
 showHistory();
-loadMarkets();
+document.getElementById("loginBox").style.display = "block";loadMarkets();
 
 </script>
 
