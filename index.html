@@ -84,7 +84,24 @@ Enter Dashboard
 
 </div>
 <div class="container">
+<div id="accountBar" style="
+background:#101827;
+border:1px solid #263247;
+border-radius:15px;
+padding:15px;
+margin-bottom:20px;
+text-align:center;
+">
 
+👤 Welcome, <strong id="userDisplay">Demo User</strong>
+
+<br>
+
+<span style="color:#4ade80;">
+● Demo Account
+</span>
+
+</div>
 <header>
 
 <h1>📈 My Trading Signals</h1>
@@ -433,7 +450,7 @@ return;
 }
 
 document.getElementById("loginBox").style.display="none";
-
+document.getElementById("userDisplay").textContent = username;
 }
 function loadMarkets(){
 
