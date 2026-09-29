@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>My Trading Signals</title>
 
   <style>
@@ -18,9 +19,9 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1050px;
       margin: auto;
-      padding: 25px 18px 40px;
+      padding: 25px 18px 45px;
     }
 
     header {
@@ -52,7 +53,8 @@
       gap: 18px;
     }
 
-    .card {
+    .card,
+    .panel {
       background: #111827;
       border: 1px solid #243044;
       border-radius: 18px;
@@ -82,6 +84,7 @@
       color: #94a3b8;
       font-size: 12px;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .signal {
@@ -123,10 +126,54 @@
       color: white;
       font-size: 16px;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
     }
 
     .section {
-      margin-top: 35px;
+      margin-top: 38px;
+    }
+
+    .section h2 {
+      margin-bottom: 15px;
+    }
+
+    .tester-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: #0b1220;
+      border: 1px solid #243044;
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 27px;
+      font-weight: bold;
+    }
+
+    .stat-label {
+      color: #94a3b8;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .test-result {
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #0b1220;
+      color: #cbd5e1;
+      line-height: 1.5;
     }
 
     .history-item {
@@ -167,47 +214,134 @@
     <div class="status">● System Online</div>
   </header>
 
+
+  <!-- MARKETS -->
+
   <div class="cards" id="marketCards"></div>
 
   <button onclick="loadMarkets()">
     🔄 Refresh Market Data
   </button>
 
+
+  <!-- STRATEGY TESTER -->
+
   <div class="section">
+
+    <div class="panel">
+
+      <h2>🧪 Demo Strategy Tester</h2>
+
+      <p style="color:#94a3b8;">
+        Run a simulated test using generated demo price movements.
+        This does not represent actual trading performance.
+      </p>
+
+      <button onclick="runBacktest()">
+        ▶ Run Demo Test
+      </button>
+
+      <div class="tester-grid">
+
+        <div class="stat">
+          <div id="totalTests" class="stat-number">0</div>
+          <div class="stat-label">Tests</div>
+        </div>
+
+        <div class="stat">
+          <div id="buyCount" class="stat-number buy">0</div>
+          <div class="stat-label">BUY</div>
+        </div>
+
+        <div class="stat">
+          <div id="sellCount" class="stat-number sell">0</div>
+          <div class="stat-label">SELL</div>
+        </div>
+
+        <div class="stat">
+          <div id="waitCount" class="stat-number wait">0</div>
+          <div class="stat-label">WAIT</div>
+        </div>
+
+        <div class="stat">
+          <div id="wins" class="stat-number">0</div>
+          <div class="stat-label">Simulated Wins</div>
+        </div>
+
+        <div class="stat">
+          <div id="losses" class="stat-number">0</div>
+          <div class="stat-label">Simulated Losses</div>
+        </div>
+
+      </div>
+
+      <div id="testResult" class="test-result">
+        No demo test has been run yet.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- HISTORY -->
+
+  <div class="section">
+
     <h2>📋 Signal History</h2>
+
     <div id="historyList">
       No demo signals recorded yet.
     </div>
+
   </div>
 
+
   <div class="disclaimer">
+
     ⚠️ <strong>Educational Demo</strong><br>
-    Reference rates and demo signals are provided for software
-    testing and educational purposes only. They are not financial
-    advice, guarantees, or recommendations to buy or sell.
+
+    Reference rates, demo signals and simulated test results
+    are provided for educational and software-testing purposes only.
+    They are not financial advice, guarantees, or recommendations
+    to buy or sell.
+
   </div>
 
 </div>
 
+
 <script>
 
+
+/* =========================
+   MARKET LIST
+========================= */
+
 const markets = [
+
   ["EUR/USD", "EUR", "USD"],
+
   ["GBP/USD", "GBP", "USD"],
+
   ["USD/JPY", "USD", "JPY"],
+
   ["AUD/USD", "AUD", "USD"],
+
   ["USD/CAD", "USD", "CAD"],
+
   ["USD/CHF", "USD", "CHF"],
+
   ["EUR/GBP", "EUR", "GBP"]
+
 ];
 
 
-function createDemoSignal(rate) {
+/* =========================
+   DEMO SIGNAL RULE
+========================= */
 
-  /*
-    Simple demonstration rule.
-    This is NOT a validated trading strategy.
-  */
+function createDemoSignal(rate) {
 
   if (rate > 1.5) {
     return "BUY";
@@ -218,8 +352,13 @@ function createDemoSignal(rate) {
   }
 
   return "WAIT";
+
 }
 
+
+/* =========================
+   SIGNAL CLASS
+========================= */
 
 function signalClass(signal) {
 
@@ -232,8 +371,13 @@ function signalClass(signal) {
   }
 
   return "wait";
+
 }
 
+
+/* =========================
+   SAVE HISTORY
+========================= */
 
 function saveHistory(pair, price, signal) {
 
@@ -242,10 +386,15 @@ function saveHistory(pair, price, signal) {
   );
 
   history.unshift({
+
     pair: pair,
+
     price: price,
+
     signal: signal,
+
     time: new Date().toLocaleString()
+
   });
 
   history = history.slice(0, 30);
@@ -254,8 +403,13 @@ function saveHistory(pair, price, signal) {
     "demoSignalHistory",
     JSON.stringify(history)
   );
+
 }
 
+
+/* =========================
+   DISPLAY HISTORY
+========================= */
 
 function displayHistory() {
 
@@ -267,9 +421,12 @@ function displayHistory() {
   );
 
   if (history.length === 0) {
+
     list.innerHTML =
       "No demo signals recorded yet.";
+
     return;
+
   }
 
   list.innerHTML = "";
@@ -279,28 +436,42 @@ function displayHistory() {
     const div =
       document.createElement("div");
 
-    div.className = "history-item";
+    div.className =
+      "history-item";
 
     div.innerHTML = `
+
       <strong>${item.pair}</strong>
+
       —
+
       <span class="${signalClass(item.signal)}">
         ${item.signal}
       </span>
+
       — ${item.price}
+
       <div class="history-time">
         ${item.time}
       </div>
+
     `;
 
     list.appendChild(div);
+
   });
+
 }
 
+
+/* =========================
+   CREATE MARKET CARD
+========================= */
 
 function createCard(pair, id) {
 
   return `
+
     <div class="card">
 
       <div class="pair">
@@ -320,7 +491,9 @@ function createCard(pair, id) {
         <div
           id="${id}-signal"
           class="signal wait">
+
           Loading...
+
         </div>
 
       </div>
@@ -328,19 +501,29 @@ function createCard(pair, id) {
       <div
         id="${id}-price"
         class="price">
+
         Reference Price: Loading...
+
       </div>
 
       <div
         id="${id}-strategy"
         class="strategy">
+
         Checking demo strategy...
+
       </div>
 
     </div>
+
   `;
+
 }
 
+
+/* =========================
+   LOAD MARKET DATA
+========================= */
 
 async function loadMarkets() {
 
@@ -360,13 +543,24 @@ async function loadMarkets() {
   });
 
 
-  for (let i = 0; i < markets.length; i++) {
+  for (
+    let i = 0;
+    i < markets.length;
+    i++
+  ) {
 
-    const pair = markets[i][0];
-    const base = markets[i][1];
-    const quote = markets[i][2];
+    const pair =
+      markets[i][0];
 
-    const id = "market" + i;
+    const base =
+      markets[i][1];
+
+    const quote =
+      markets[i][2];
+
+    const id =
+      "market" + i;
+
 
     try {
 
@@ -375,18 +569,27 @@ async function loadMarkets() {
           `https://api.frankfurter.dev/v2/rate/${base}/${quote}`
         );
 
+
       if (!response.ok) {
-        throw new Error("Rate unavailable");
+
+        throw new Error(
+          "Rate unavailable"
+        );
+
       }
+
 
       const data =
         await response.json();
 
+
       const rate =
         data.rate;
 
+
       const signal =
         createDemoSignal(rate);
+
 
       document.getElementById(
         id + "-price"
@@ -394,23 +597,28 @@ async function loadMarkets() {
         "Reference Price: " +
         rate.toFixed(5);
 
+
       const signalElement =
         document.getElementById(
           id + "-signal"
         );
 
+
       signalElement.textContent =
         signal;
+
 
       signalElement.className =
         "signal " +
         signalClass(signal);
+
 
       document.getElementById(
         id + "-strategy"
       ).textContent =
         "Demo rule • Reference date: " +
         data.date;
+
 
       saveHistory(
         pair,
@@ -420,12 +628,14 @@ async function loadMarkets() {
 
     }
 
+
     catch (error) {
 
       document.getElementById(
         id + "-price"
       ).textContent =
         "Reference rate unavailable.";
+
 
       document.getElementById(
         id + "-strategy"
@@ -436,9 +646,181 @@ async function loadMarkets() {
 
   }
 
+
   displayHistory();
+
 }
 
+
+/* =========================
+   DEMO BACKTEST
+========================= */
+
+function runBacktest() {
+
+  let total = 100;
+
+  let buy = 0;
+
+  let sell = 0;
+
+  let wait = 0;
+
+  let wins = 0;
+
+  let losses = 0;
+
+
+  for (
+    let i = 0;
+    i < total;
+    i++
+  ) {
+
+    /*
+      Generate a demo price
+      between 0.3 and 2.0.
+    */
+
+    const price =
+      0.3 +
+      Math.random() * 1.7;
+
+
+    const signal =
+      createDemoSignal(price);
+
+
+    /*
+      Generate another simulated
+      movement to test the signal.
+    */
+
+    const nextPrice =
+      price +
+      (Math.random() - 0.5) * 0.2;
+
+
+    if (signal === "BUY") {
+
+      buy++;
+
+      if (nextPrice > price) {
+        wins++;
+      } else {
+        losses++;
+      }
+
+    }
+
+
+    else if (signal === "SELL") {
+
+      sell++;
+
+      if (nextPrice < price) {
+        wins++;
+      } else {
+        losses++;
+      }
+
+    }
+
+
+    else {
+
+      wait++;
+
+    }
+
+  }
+
+
+  const tested =
+    wins + losses;
+
+
+  let resultText =
+    "No BUY or SELL trades were generated.";
+
+
+  if (tested > 0) {
+
+    const percentage =
+      ((wins / tested) * 100)
+      .toFixed(1);
+
+
+    resultText =
+
+      "Simulated result: " +
+
+      wins +
+
+      " wins and " +
+
+      losses +
+
+      " losses from " +
+
+      tested +
+
+      " simulated BUY/SELL tests. " +
+
+      "This percentage is generated from random demo data " +
+
+      "and must not be interpreted as real strategy performance.";
+
+  }
+
+
+  document.getElementById(
+    "totalTests"
+  ).textContent =
+    total;
+
+
+  document.getElementById(
+    "buyCount"
+  ).textContent =
+    buy;
+
+
+  document.getElementById(
+    "sellCount"
+  ).textContent =
+    sell;
+
+
+  document.getElementById(
+    "waitCount"
+  ).textContent =
+    wait;
+
+
+  document.getElementById(
+    "wins"
+  ).textContent =
+    wins;
+
+
+  document.getElementById(
+    "losses"
+  ).textContent =
+    losses;
+
+
+  document.getElementById(
+    "testResult"
+  ).textContent =
+    resultText;
+
+}
+
+
+/* =========================
+   START
+========================= */
 
 displayHistory();
 
