@@ -3,67 +3,113 @@
 <head>
   <title>My Trading Signals</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #111827;
       color: white;
-      text-align: center;
       margin: 0;
-      padding: 30px 15px;
+      padding: 20px;
     }
 
-    .box {
-      max-width: 500px;
+    .container {
+      max-width: 600px;
       margin: auto;
     }
 
     h1 {
-      font-size: 32px;
+      text-align: center;
+      margin-bottom: 5px;
     }
 
-    .card {
+    .subtitle {
+      text-align: center;
+      color: #9ca3af;
+      margin-bottom: 25px;
+    }
+
+    .signal {
       background: #1f2937;
       padding: 20px;
       border-radius: 15px;
-      margin-top: 25px;
+      margin-bottom: 18px;
+    }
+
+    .pair {
+      font-size: 22px;
+      font-weight: bold;
     }
 
     .buy {
-      font-size: 25px;
+      color: #22c55e;
       font-weight: bold;
-      margin: 15px;
+      font-size: 20px;
     }
 
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 14px 25px;
-      border-radius: 10px;
-      font-size: 16px;
+    .sell {
+      color: #ef4444;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .info {
+      margin-top: 12px;
+      line-height: 1.8;
+      color: #d1d5db;
+    }
+
+    .status {
+      margin-top: 10px;
+      color: #22c55e;
     }
   </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
   <h1>📈 My Trading Signals</h1>
+  <p class="subtitle">Latest market signals</p>
 
-  <p>Simple trading signals in one place.</p>
+  <div class="signal">
+    <div class="pair">EUR/USD</div>
+    <p class="buy">BUY</p>
 
-  <div class="card">
-    <h2>Latest Signal</h2>
+    <div class="info">
+      Entry: Example price<br>
+      Stop Loss: Example price<br>
+      Take Profit: Example price
+    </div>
 
-    <p>EUR/USD</p>
+    <div class="status">● Active</div>
+  </div>
 
-    <div class="buy">BUY</div>
+  <div class="signal">
+    <div class="pair">GBP/USD</div>
+    <p class="sell">SELL</p>
 
-    <p>Signal status: Active</p>
+    <div class="info">
+      Entry: Example price<br>
+      Stop Loss: Example price<br>
+      Take Profit: Example price
+    </div>
 
-    <button>View Signal</button>
+    <div class="status">● Active</div>
+  </div>
+
+  <div class="signal">
+    <div class="pair">XAU/USD — GOLD</div>
+    <p class="buy">BUY</p>
+
+    <div class="info">
+      Entry: Example price<br>
+      Stop Loss: Example price<br>
+      Take Profit: Example price
+    </div>
+
+    <div class="status">● Active</div>
   </div>
 
 </div>
