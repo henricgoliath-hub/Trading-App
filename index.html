@@ -129,7 +129,17 @@ No demo test has been run yet.
 </div>
 
 </div>
+<div class="panel">
 
+<h2>📋 Signal History</h2>
+
+<div id="history">
+
+No demo signals recorded yet.
+
+</div>
+
+</div>
 <div class="disclaimer">
 
 ⚠️ <strong>Educational Demo</strong><br>
@@ -328,7 +338,71 @@ return "wait";
 }
 
 </script><script>
+function saveSignal(pair, price, signal){
 
+let history =
+JSON.parse(localStorage.getItem("signalHistory") || "[]");
+
+history.unshift({
+pair: pair,
+price: price,
+signal: signal,
+time: new Date().toLocaleString()
+});
+
+history = history.slice(0, 20);
+
+localStorage.setItem(
+"signalHistory",
+JSON.stringify(history)
+);
+
+showHistory();
+
+}
+
+function showHistory(){
+
+const historyBox =
+document.getElementById("history");
+
+const history =
+JSON.parse(localStorage.getItem("signalHistory") || "[]");
+
+if(history.length === 0){
+
+historyBox.innerHTML =
+"No demo signals recorded yet.";
+
+return;
+
+}
+
+historyBox.innerHTML = "";
+
+history.forEach(function(item){
+
+const row =
+document.createElement("div");
+
+row.style.padding = "12px";
+row.style.marginBottom = "8px";
+row.style.background = "#080f1c";
+row.style.borderRadius = "10px";
+
+row.innerHTML =
+"<strong>" + item.pair + "</strong> — " +
+"<span class='" + signalClass(item.signal) + "'>" +
+item.signal +
+"</span><br>" +
+"<small>Price: " + item.price +
+" • " + item.time + "</small>";
+
+historyBox.appendChild(row);
+
+});
+
+}
 function loadMarkets(){
 
 const container =
@@ -456,7 +530,11 @@ const price =
 
 const signal =
 getSignal(price);
-
+saveSignal(
+  market[0],
+  data.rate.toFixed(5),
+  signal
+);
 if(signal==="BUY"){
 buy++;
 }
@@ -493,7 +571,7 @@ document.getElementById(
 "Demo test completed. The results use randomly generated data and do not represent real trading performance.";
 
 }
-
+showHistory();
 loadMarkets();
 
 </script>
