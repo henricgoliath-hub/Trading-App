@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Trading Signals</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Trading Signals</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -12,51 +17,67 @@
       color: white;
     }
 
-    .header {
-      padding: 25px 20px;
-      text-align: center;
+    header {
       background: #111827;
+      padding: 28px 20px;
+      text-align: center;
+      border-bottom: 1px solid #374151;
     }
 
-    .header h1 {
+    header h1 {
       margin: 0;
       font-size: 30px;
     }
 
-    .header p {
+    header p {
       color: #9ca3af;
+      margin-bottom: 0;
     }
 
     .container {
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
+      width: 92%;
+      max-width: 650px;
+      margin: 25px auto;
     }
 
-    .dashboard {
+    .stats {
       display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 25px;
     }
 
     .stat {
       flex: 1;
       background: #1f2937;
-      padding: 15px;
-      border-radius: 12px;
+      padding: 18px;
+      border-radius: 14px;
       text-align: center;
     }
 
-    .stat strong {
+    .stat-number {
       display: block;
-      font-size: 22px;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      color: #9ca3af;
+      font-size: 13px;
     }
 
     .signal {
       background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 16px;
       padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
+    }
+
+    .signal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .pair {
@@ -66,115 +87,144 @@
 
     .buy {
       color: #22c55e;
+      font-size: 18px;
       font-weight: bold;
-      font-size: 20px;
     }
 
     .sell {
       color: #ef4444;
+      font-size: 18px;
       font-weight: bold;
-      font-size: 20px;
     }
 
     .details {
-      line-height: 1.8;
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .detail {
+      background: #111827;
+      padding: 12px;
+      border-radius: 9px;
       color: #d1d5db;
     }
 
-    .active {
+    .status {
+      margin-top: 15px;
       color: #22c55e;
       font-size: 14px;
     }
 
     .refresh {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       border: none;
       border-radius: 10px;
       background: #2563eb;
       color: white;
       font-size: 16px;
-      margin-top: 5px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     .notice {
       text-align: center;
       color: #9ca3af;
       font-size: 12px;
-      margin-top: 25px;
+      line-height: 1.5;
+      margin: 22px 5px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="header">
-    <h1>📈 My Trading Signals</h1>
-    <p>Trading dashboard</p>
-  </div>
+<header>
+  <h1>📈 My Trading Signals</h1>
+  <p>Trading Signals Dashboard</p>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <div class="dashboard">
-      <div class="stat">
-        <strong>3</strong>
-        Active
-      </div>
+  <div class="stats">
 
-      <div class="stat">
-        <strong>Demo</strong>
-        Mode
-      </div>
+    <div class="stat">
+      <span class="stat-number">3</span>
+      <span class="stat-label">Signals</span>
     </div>
 
-    <div class="signal">
+    <div class="stat">
+      <span class="stat-number">DEMO</span>
+      <span class="stat-label">Mode</span>
+    </div>
+
+  </div>
+
+  <!-- EUR/USD -->
+  <div class="signal">
+
+    <div class="signal-top">
       <div class="pair">EUR/USD</div>
       <div class="buy">BUY</div>
-
-      <div class="details">
-        Entry: Example price<br>
-        Stop Loss: Example price<br>
-        Take Profit: Example price
-      </div>
-
-      <div class="active">● Active signal</div>
     </div>
 
-    <div class="signal">
-      <div class="pair">GBP/USD</div>
-      <div class="sell">SELL</div>
-
-      <div class="details">
-        Entry: Example price<br>
-        Stop Loss: Example price<br>
-        Take Profit: Example price
-      </div>
-
-      <div class="active">● Active signal</div>
+    <div class="details">
+      <div class="detail">Entry: Example price</div>
+      <div class="detail">Stop Loss: Example price</div>
+      <div class="detail">Take Profit: Example price</div>
     </div>
 
-    <div class="signal">
-      <div class="pair">XAU/USD — GOLD</div>
-      <div class="buy">BUY</div>
-
-      <div class="details">
-        Entry: Example price<br>
-        Stop Loss: Example price<br>
-        Take Profit: Example price
-      </div>
-
-      <div class="active">● Active signal</div>
-    </div>
-
-    <button class="refresh" onclick="location.reload()">
-      🔄 Refresh Signals
-    </button>
-
-    <div class="notice">
-      Demo interface for educational purposes. Example prices are not live market data.
-    </div>
+    <div class="status">● Example signal</div>
 
   </div>
+
+  <!-- GBP/USD -->
+  <div class="signal">
+
+    <div class="signal-top">
+      <div class="pair">GBP/USD</div>
+      <div class="sell">SELL</div>
+    </div>
+
+    <div class="details">
+      <div class="detail">Entry: Example price</div>
+      <div class="detail">Stop Loss: Example price</div>
+      <div class="detail">Take Profit: Example price</div>
+    </div>
+
+    <div class="status">● Example signal</div>
+
+  </div>
+
+  <!-- GOLD -->
+  <div class="signal">
+
+    <div class="signal-top">
+      <div class="pair">XAU/USD — GOLD</div>
+      <div class="buy">BUY</div>
+    </div>
+
+    <div class="details">
+      <div class="detail">Entry: Example price</div>
+      <div class="detail">Stop Loss: Example price</div>
+      <div class="detail">Take Profit: Example price</div>
+    </div>
+
+    <div class="status">● Example signal</div>
+
+  </div>
+
+  <button class="refresh" onclick="location.reload()">
+    🔄 Refresh Dashboard
+  </button>
+
+  <p class="notice">
+    Demo interface for educational purposes. The displayed prices are examples
+    and are not live market data or financial advice.
+  </p>
+
+</div>
 
 </body>
 </html>
