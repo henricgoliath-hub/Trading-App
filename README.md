@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +32,6 @@
 
     header p {
       color: #9ca3af;
-      margin-bottom: 0;
     }
 
     .container {
@@ -40,33 +40,7 @@
       margin: 25px auto;
     }
 
-    .stats {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 25px;
-    }
-
-    .stat {
-      flex: 1;
-      background: #1f2937;
-      padding: 18px;
-      border-radius: 14px;
-      text-align: center;
-    }
-
-    .stat-number {
-      display: block;
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .stat-label {
-      color: #9ca3af;
-      font-size: 13px;
-    }
-
-    .signal {
+    .rate {
       background: #1f2937;
       border: 1px solid #374151;
       border-radius: 16px;
@@ -74,49 +48,23 @@
       margin-bottom: 18px;
     }
 
-    .signal-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
     .pair {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: bold;
     }
 
-    .buy {
-      color: #22c55e;
-      font-size: 18px;
-      font-weight: bold;
+    .price {
+      font-size: 28px;
+      margin: 15px 0;
+      color: #60a5fa;
     }
 
-    .sell {
-      color: #ef4444;
-      font-size: 18px;
-      font-weight: bold;
+    .updated {
+      color: #9ca3af;
+      font-size: 13px;
     }
 
-    .details {
-      margin-top: 18px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .detail {
-      background: #111827;
-      padding: 12px;
-      border-radius: 9px;
-      color: #d1d5db;
-    }
-
-    .status {
-      margin-top: 15px;
-      color: #22c55e;
-      font-size: 14px;
-    }
-
-    .refresh {
+    button {
       width: 100%;
       padding: 15px;
       border: none;
@@ -125,7 +73,6 @@
       color: white;
       font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
     }
 
     .notice {
@@ -133,7 +80,13 @@
       color: #9ca3af;
       font-size: 12px;
       line-height: 1.5;
-      margin: 22px 5px;
+      margin-top: 22px;
+    }
+
+    #status {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #22c55e;
     }
   </style>
 </head>
@@ -142,89 +95,86 @@
 
 <header>
   <h1>📈 My Trading Signals</h1>
-  <p>Trading Signals Dashboard</p>
+  <p>Market Reference Dashboard</p>
 </header>
 
 <div class="container">
 
-  <div class="stats">
+  <div id="status">Loading reference rates...</div>
 
-    <div class="stat">
-      <span class="stat-number">3</span>
-      <span class="stat-label">Signals</span>
-    </div>
-
-    <div class="stat">
-      <span class="stat-number">DEMO</span>
-      <span class="stat-label">Mode</span>
-    </div>
-
+  <div class="rate">
+    <div class="pair">EUR/USD</div>
+    <div class="price" id="eurusd">Loading...</div>
+    <div class="updated" id="eurDate"></div>
   </div>
 
-  <!-- EUR/USD -->
-  <div class="signal">
-
-    <div class="signal-top">
-      <div class="pair">EUR/USD</div>
-      <div class="buy">BUY</div>
-    </div>
-
-    <div class="details">
-      <div class="detail">Entry: Example price</div>
-      <div class="detail">Stop Loss: Example price</div>
-      <div class="detail">Take Profit: Example price</div>
-    </div>
-
-    <div class="status">● Example signal</div>
-
+  <div class="rate">
+    <div class="pair">GBP/USD</div>
+    <div class="price" id="gbpusd">Loading...</div>
+    <div class="updated" id="gbpDate"></div>
   </div>
 
-  <!-- GBP/USD -->
-  <div class="signal">
+  <button onclick="loadRates()">🔄 Refresh Rates</button>
 
-    <div class="signal-top">
-      <div class="pair">GBP/USD</div>
-      <div class="sell">SELL</div>
-    </div>
-
-    <div class="details">
-      <div class="detail">Entry: Example price</div>
-      <div class="detail">Stop Loss: Example price</div>
-      <div class="detail">Take Profit: Example price</div>
-    </div>
-
-    <div class="status">● Example signal</div>
-
+  <div class="notice">
+    These are reference exchange rates, not live trading prices or trading advice.
   </div>
-
-  <!-- GOLD -->
-  <div class="signal">
-
-    <div class="signal-top">
-      <div class="pair">XAU/USD — GOLD</div>
-      <div class="buy">BUY</div>
-    </div>
-
-    <div class="details">
-      <div class="detail">Entry: Example price</div>
-      <div class="detail">Stop Loss: Example price</div>
-      <div class="detail">Take Profit: Example price</div>
-    </div>
-
-    <div class="status">● Example signal</div>
-
-  </div>
-
-  <button class="refresh" onclick="location.reload()">
-    🔄 Refresh Dashboard
-  </button>
-
-  <p class="notice">
-    Demo interface for educational purposes. The displayed prices are examples
-    and are not live market data or financial advice.
-  </p>
 
 </div>
+
+<script>
+
+async function getRate(base, quote) {
+
+  const response = await fetch(
+    `https://api.frankfurter.dev/v2/rate/${base}/${quote}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Could not load rate");
+  }
+
+  return await response.json();
+}
+
+async function loadRates() {
+
+  const status = document.getElementById("status");
+
+  status.textContent = "Loading reference rates...";
+
+  try {
+
+    const eur = await getRate("EUR", "USD");
+    const gbp = await getRate("GBP", "USD");
+
+    document.getElementById("eurusd").textContent =
+      eur.rate.toFixed(5);
+
+    document.getElementById("gbpusd").textContent =
+      gbp.rate.toFixed(5);
+
+    document.getElementById("eurDate").textContent =
+      "Reference date: " + eur.date;
+
+    document.getElementById("gbpDate").textContent =
+      "Reference date: " + gbp.date;
+
+    status.textContent = "🟢 Rates loaded";
+
+  } catch (error) {
+
+    status.textContent =
+      "⚠️ Could not load rates. Try again.";
+
+    console.error(error);
+
+  }
+}
+
+loadRates();
+
+</script>
 
 </body>
 </html>
