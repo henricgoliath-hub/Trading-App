@@ -6,51 +6,41 @@
   <title>My Trading Signals</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0b1120;
+      background: #0f172a;
       color: white;
     }
 
-    header {
-      background: #111827;
-      padding: 28px 20px;
-      text-align: center;
-      border-bottom: 1px solid #374151;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 30px;
-    }
-
-    header p {
-      color: #9ca3af;
-    }
-
     .container {
-      width: 92%;
-      max-width: 650px;
-      margin: 25px auto;
+      max-width: 900px;
+      margin: auto;
+      padding: 25px;
     }
 
-    .status {
+    h1 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #22c55e;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 25px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
     }
 
     .card {
-      background: #1f2937;
-      border: 1px solid #374151;
-      border-radius: 16px;
+      background: #1e293b;
       padding: 20px;
-      margin-bottom: 18px;
+      border-radius: 15px;
+      border: 1px solid #334155;
     }
 
     .pair {
@@ -59,15 +49,14 @@
     }
 
     .price {
-      font-size: 28px;
-      color: #60a5fa;
+      color: #cbd5e1;
       margin: 12px 0;
     }
 
     .signal {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
-      margin: 15px 0;
+      margin: 10px 0;
     }
 
     .buy {
@@ -79,215 +68,266 @@
     }
 
     .wait {
-      color: #f59e0b;
-    }
-
-    .details {
-      background: #111827;
-      padding: 14px;
-      border-radius: 10px;
-      line-height: 1.8;
-      color: #d1d5db;
-    }
-
-    .updated {
-      color: #9ca3af;
-      font-size: 13px;
-      margin-top: 12px;
+      color: #facc15;
     }
 
     button {
-      width: 100%;
-      padding: 15px;
+      display: block;
+      margin: 25px auto;
+      padding: 13px 22px;
       border: none;
       border-radius: 10px;
       background: #2563eb;
       color: white;
       font-size: 16px;
-      font-weight: bold;
+      cursor: pointer;
     }
 
-    .notice {
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .history {
+      margin-top: 35px;
+    }
+
+    .history h2 {
+      margin-bottom: 15px;
+    }
+
+    .history-item {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .history-item span {
+      margin-right: 12px;
+    }
+
+    .disclaimer {
+      margin-top: 30px;
+      padding: 15px;
+      background: #172033;
+      border-radius: 10px;
+      color: #94a3b8;
+      font-size: 13px;
       text-align: center;
-      color: #9ca3af;
-      font-size: 12px;
-      line-height: 1.5;
-      margin: 22px 5px;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>📈 My Trading Signals</h1>
-  <p>Automated Demo Dashboard</p>
-</header>
+  <div class="container">
 
-<div class="container">
+    <h1>📈 My Trading Signals</h1>
+    <div class="subtitle">Automated Demo Dashboard</div>
 
-  <div id="status" class="status">
-    Loading market data...
+    <div class="cards">
+
+      <div class="card">
+        <div class="pair">EUR/USD</div>
+        <div class="price" id="eurPrice">Loading...</div>
+        <div class="signal" id="eurSignal">...</div>
+        <div id="eurStrategy">Checking demo signal...</div>
+      </div>
+
+      <div class="card">
+        <div class="pair">GBP/USD</div>
+        <div class="price" id="gbpPrice">Loading...</div>
+        <div class="signal" id="gbpSignal">...</div>
+        <div id="gbpStrategy">Checking demo signal...</div>
+      </div>
+
+    </div>
+
+    <button onclick="loadMarketData()">🔄 Refresh Market Data</button>
+
+    <div class="history">
+      <h2>📋 Signal History</h2>
+      <div id="historyList">
+        No demo signals recorded yet.
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      Demo signals are generated for educational and testing purposes only.
+      They are not financial advice, guarantees, or recommendations to buy or sell.
+    </div>
+
   </div>
 
-  <div class="card">
-    <div class="pair">EUR/USD</div>
+  <script>
 
-    <div id="eurPrice" class="price">
-      Loading...
-    </div>
+    function createDemoSignal(rate) {
+      if (rate > 1.5) {
+        return "BUY";
+      }
 
-    <div id="eurSignal" class="signal wait">
-      WAIT
-    </div>
+      if (rate < 0.5) {
+        return "SELL";
+      }
 
-    <div class="details">
-      Strategy: Demo trend rule<br>
-      Status: Educational demo
-    </div>
+      return "WAIT";
+    }
 
-    <div id="eurUpdated" class="updated"></div>
-  </div>
+    function showSignal(elementId, signal) {
+      const element = document.getElementById(elementId);
 
-  <div class="card">
-    <div class="pair">GBP/USD</div>
+      element.textContent = signal;
 
-    <div id="gbpPrice" class="price">
-      Loading...
-    </div>
+      element.className = "signal";
 
-    <div id="gbpSignal" class="signal wait">
-      WAIT
-    </div>
+      if (signal === "BUY") {
+        element.classList.add("buy");
+      } else if (signal === "SELL") {
+        element.classList.add("sell");
+      } else {
+        element.classList.add("wait");
+      }
+    }
 
-    <div class="details">
-      Strategy: Demo trend rule<br>
-      Status: Educational demo
-    </div>
+    function saveHistory(pair, price, signal) {
 
-    <div id="gbpUpdated" class="updated"></div>
-  </div>
+      let history = JSON.parse(
+        localStorage.getItem("demoSignalHistory") || "[]"
+      );
 
-  <button onclick="loadRates()">
-    🔄 Refresh Market Data
-  </button>
+      const now = new Date();
 
-  <div class="notice">
-    Demo signals are generated for educational/testing purposes only.
-    They are not financial advice, guarantees, or recommendations to buy or sell.
-  </div>
+      history.unshift({
+        pair: pair,
+        price: price,
+        signal: signal,
+        time: now.toLocaleString()
+      });
 
-</div>
+      history = history.slice(0, 20);
 
-<script>
+      localStorage.setItem(
+        "demoSignalHistory",
+        JSON.stringify(history)
+      );
 
-async function getRate(base, quote) {
+      displayHistory();
+    }
 
-  const response = await fetch(
-    `https://api.frankfurter.dev/v2/rate/${base}/${quote}`
-  );
+    function displayHistory() {
 
-  if (!response.ok) {
-    throw new Error("Market data unavailable");
-  }
+      const historyList = document.getElementById("historyList");
 
-  return await response.json();
-}
+      let history = JSON.parse(
+        localStorage.getItem("demoSignalHistory") || "[]"
+      );
 
+      if (history.length === 0) {
+        historyList.innerHTML =
+          "No demo signals recorded yet.";
+        return;
+      }
 
-function createDemoSignal(rate) {
+      historyList.innerHTML = "";
 
-  /*
-    Simple demonstration rule.
+      history.forEach(item => {
 
-    This is NOT a prediction system.
-    It only demonstrates how software can
-    turn incoming data into a signal label.
-  */
+        let signalClass = "wait";
 
-  if (rate > 1.5) {
-    return "BUY";
-  }
+        if (item.signal === "BUY") {
+          signalClass = "buy";
+        }
 
-  if (rate < 0.5) {
-    return "SELL";
-  }
+        if (item.signal === "SELL") {
+          signalClass = "sell";
+        }
 
-  return "WAIT";
-}
+        const div = document.createElement("div");
 
+        div.className = "history-item";
 
-function showSignal(elementId, signal) {
+        div.innerHTML = `
+          <strong>${item.pair}</strong>
+          <span>Price: ${item.price}</span>
+          <span class="${signalClass}">
+            ${item.signal}
+          </span>
+          <br>
+          <small>${item.time}</small>
+        `;
 
-  const element = document.getElementById(elementId);
+        historyList.appendChild(div);
+      });
+    }
 
-  element.textContent = signal;
+    async function loadMarketData() {
 
-  element.className = "signal";
+      try {
 
-  if (signal === "BUY") {
-    element.classList.add("buy");
-  }
+        const eurResponse =
+          await fetch("https://api.frankfurter.dev/v2/rate/EUR/USD");
 
-  else if (signal === "SELL") {
-    element.classList.add("sell");
-  }
+        const eurData = await eurResponse.json();
 
-  else {
-    element.classList.add("wait");
-  }
-}
+        const eurRate = eurData.rate;
 
+        const eurSignal = createDemoSignal(eurRate);
 
-async function loadRates() {
+        document.getElementById("eurPrice").textContent =
+          "Reference Price: " + eurRate.toFixed(5);
 
-  const status = document.getElementById("status");
+        showSignal("eurSignal", eurSignal);
 
-  status.textContent = "Loading market data...";
+        document.getElementById("eurStrategy").textContent =
+          "Demo rule based on the reference rate.";
 
-  try {
-
-    const eur = await getRate("EUR", "USD");
-    const gbp = await getRate("GBP", "USD");
-
-    document.getElementById("eurPrice").textContent =
-      eur.rate.toFixed(5);
-
-    document.getElementById("gbpPrice").textContent =
-      gbp.rate.toFixed(5);
-
-    showSignal(
-      "eurSignal",
-      createDemoSignal(eur.rate)
-    );
-
-    showSignal(
-      "gbpSignal",
-      createDemoSignal(gbp.rate)
-    );
-
-    document.getElementById("eurUpdated").textContent =
-      "Reference date: " + eur.date;
-
-    document.getElementById("gbpUpdated").textContent =
-      "Reference date: " + gbp.date;
-
-    status.textContent = "🟢 Market data loaded";
-
-  }
-
-  catch (error) {
-
-    status.textContent =
-      "⚠️ Could not load market data.";
-
-  }
-}
+        saveHistory(
+          "EUR/USD",
+          eurRate.toFixed(5),
+          eurSignal
+        );
 
 
-loadRates();
+        const gbpResponse =
+          await fetch("https://api.frankfurter.dev/v2/rate/GBP/USD");
 
-</script>
+        const gbpData = await gbpResponse.json();
+
+        const gbpRate = gbpData.rate;
+
+        const gbpSignal = createDemoSignal(gbpRate);
+
+        document.getElementById("gbpPrice").textContent =
+          "Reference Price: " + gbpRate.toFixed(5);
+
+        showSignal("gbpSignal", gbpSignal);
+
+        document.getElementById("gbpStrategy").textContent =
+          "Demo rule based on the reference rate.";
+
+        saveHistory(
+          "GBP/USD",
+          gbpRate.toFixed(5),
+          gbpSignal
+        );
+
+      } catch (error) {
+
+        document.getElementById("eurPrice").textContent =
+          "Unable to load rate";
+
+        document.getElementById("gbpPrice").textContent =
+          "Unable to load rate";
+
+        console.log(error);
+      }
+    }
+
+    displayHistory();
+    loadMarketData();
+
+  </script>
 
 </body>
 </html>
