@@ -197,7 +197,7 @@ No demo test has been run yet.
 <div id="history">
 No demo signals recorded yet.
 </div>
-
+<button onclick="clearHistory()">🗑️ Clear History</button>
 </div>
 <div class="disclaimer">
 
@@ -459,7 +459,10 @@ item.signal +
 
 historyBox.appendChild(row);
 
-});
+});function clearHistory(){
+  localStorage.removeItem("signalHistory");
+  showHistory();
+}
 
 }function demoLogin(){
 
