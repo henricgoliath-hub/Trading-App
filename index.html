@@ -545,6 +545,12 @@ return response.json();
 const signal =
 getSignal(data.rate);
 
+saveSignal(
+  market[0],
+  data.rate.toFixed(5),
+  signal
+);
+
 const signalElement =
 document.getElementById(
 "signal"+index
