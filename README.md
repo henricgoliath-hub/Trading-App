@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +39,13 @@
       margin: 25px auto;
     }
 
-    .rate {
+    .status {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #22c55e;
+    }
+
+    .card {
       background: #1f2937;
       border: 1px solid #374151;
       border-radius: 16px;
@@ -55,13 +60,40 @@
 
     .price {
       font-size: 28px;
-      margin: 15px 0;
       color: #60a5fa;
+      margin: 12px 0;
+    }
+
+    .signal {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .buy {
+      color: #22c55e;
+    }
+
+    .sell {
+      color: #ef4444;
+    }
+
+    .wait {
+      color: #f59e0b;
+    }
+
+    .details {
+      background: #111827;
+      padding: 14px;
+      border-radius: 10px;
+      line-height: 1.8;
+      color: #d1d5db;
     }
 
     .updated {
       color: #9ca3af;
       font-size: 13px;
+      margin-top: 12px;
     }
 
     button {
@@ -80,13 +112,7 @@
       color: #9ca3af;
       font-size: 12px;
       line-height: 1.5;
-      margin-top: 22px;
-    }
-
-    #status {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #22c55e;
+      margin: 22px 5px;
     }
   </style>
 </head>
@@ -95,29 +121,60 @@
 
 <header>
   <h1>📈 My Trading Signals</h1>
-  <p>Market Reference Dashboard</p>
+  <p>Automated Demo Dashboard</p>
 </header>
 
 <div class="container">
 
-  <div id="status">Loading reference rates...</div>
+  <div id="status" class="status">
+    Loading market data...
+  </div>
 
-  <div class="rate">
+  <div class="card">
     <div class="pair">EUR/USD</div>
-    <div class="price" id="eurusd">Loading...</div>
-    <div class="updated" id="eurDate"></div>
+
+    <div id="eurPrice" class="price">
+      Loading...
+    </div>
+
+    <div id="eurSignal" class="signal wait">
+      WAIT
+    </div>
+
+    <div class="details">
+      Strategy: Demo trend rule<br>
+      Status: Educational demo
+    </div>
+
+    <div id="eurUpdated" class="updated"></div>
   </div>
 
-  <div class="rate">
+  <div class="card">
     <div class="pair">GBP/USD</div>
-    <div class="price" id="gbpusd">Loading...</div>
-    <div class="updated" id="gbpDate"></div>
+
+    <div id="gbpPrice" class="price">
+      Loading...
+    </div>
+
+    <div id="gbpSignal" class="signal wait">
+      WAIT
+    </div>
+
+    <div class="details">
+      Strategy: Demo trend rule<br>
+      Status: Educational demo
+    </div>
+
+    <div id="gbpUpdated" class="updated"></div>
   </div>
 
-  <button onclick="loadRates()">🔄 Refresh Rates</button>
+  <button onclick="loadRates()">
+    🔄 Refresh Market Data
+  </button>
 
   <div class="notice">
-    These are reference exchange rates, not live trading prices or trading advice.
+    Demo signals are generated for educational/testing purposes only.
+    They are not financial advice, guarantees, or recommendations to buy or sell.
   </div>
 
 </div>
@@ -131,46 +188,102 @@ async function getRate(base, quote) {
   );
 
   if (!response.ok) {
-    throw new Error("Could not load rate");
+    throw new Error("Market data unavailable");
   }
 
   return await response.json();
 }
 
+
+function createDemoSignal(rate) {
+
+  /*
+    Simple demonstration rule.
+
+    This is NOT a prediction system.
+    It only demonstrates how software can
+    turn incoming data into a signal label.
+  */
+
+  if (rate > 1.5) {
+    return "BUY";
+  }
+
+  if (rate < 0.5) {
+    return "SELL";
+  }
+
+  return "WAIT";
+}
+
+
+function showSignal(elementId, signal) {
+
+  const element = document.getElementById(elementId);
+
+  element.textContent = signal;
+
+  element.className = "signal";
+
+  if (signal === "BUY") {
+    element.classList.add("buy");
+  }
+
+  else if (signal === "SELL") {
+    element.classList.add("sell");
+  }
+
+  else {
+    element.classList.add("wait");
+  }
+}
+
+
 async function loadRates() {
 
   const status = document.getElementById("status");
 
-  status.textContent = "Loading reference rates...";
+  status.textContent = "Loading market data...";
 
   try {
 
     const eur = await getRate("EUR", "USD");
     const gbp = await getRate("GBP", "USD");
 
-    document.getElementById("eurusd").textContent =
+    document.getElementById("eurPrice").textContent =
       eur.rate.toFixed(5);
 
-    document.getElementById("gbpusd").textContent =
+    document.getElementById("gbpPrice").textContent =
       gbp.rate.toFixed(5);
 
-    document.getElementById("eurDate").textContent =
+    showSignal(
+      "eurSignal",
+      createDemoSignal(eur.rate)
+    );
+
+    showSignal(
+      "gbpSignal",
+      createDemoSignal(gbp.rate)
+    );
+
+    document.getElementById("eurUpdated").textContent =
       "Reference date: " + eur.date;
 
-    document.getElementById("gbpDate").textContent =
+    document.getElementById("gbpUpdated").textContent =
       "Reference date: " + gbp.date;
 
-    status.textContent = "🟢 Rates loaded";
+    status.textContent = "🟢 Market data loaded";
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     status.textContent =
-      "⚠️ Could not load rates. Try again.";
-
-    console.error(error);
+      "⚠️ Could not load market data.";
 
   }
 }
+
 
 loadRates();
 
