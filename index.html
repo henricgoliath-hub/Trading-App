@@ -1,250 +1,65 @@
-ii<!DOCTYPE html>
+
+     <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Trading Signals</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1120;
-      color: white;
-    }
+<title>My Trading Signals</title>
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 25px 15px;
-    }
+<style>
 
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+*{
+box-sizing:border-box;
+}
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      color: #94a3b8;
-    }
-
-    .status {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 14px;
-      border-radius: 20px;
-      background: #12351f;
-      color: #4ade80;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: #111827;
-      border: 1px solid #263247;
-      border-radius: 16px;
-      padding: 22px;
-    }
-
-    .pair {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .price {
-      margin-top: 20px;
-      color: #cbd5e1;
-    }
-
-    .signal-box {
-      margin-top: 20px;
-      padding: 18px;
-      background: #0b1220;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .signal {
-      font-size: 28px;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    .buy {
-      color: #22c55e;
-    }
-
-    .sell {
-      color: #ef4444;
-    }
-
-    .wait {
-      color: #facc15;
-    }
-
-    button {
-      display: block;
-      margin: 30px auto;
-      padding: 14px 24px;
-      border: none;
-      border-radius: 10px;
-      background: #2563eb;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .panel {
-      margin-top: 35px;
-      background: #111827;
-      border: 1px solid #263247;
-      border-radius: 16px;
-      padding: 22px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 12px;
-    }
-
-    .stat {background:#0b1120;
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#070d18;
 color:white;
 }
 
 .container{
-max-width:1000px;
+max-width:1100px;
 margin:auto;
-padding:25px 15px;
+padding:20px 15px 50px;
 }
 
 header{
+background:#101827;
+border:1px solid #263247;
+border-radius:20px;
+padding:25px;
 text-align:center;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
-h1{
-font-size:32px;
-margin-bottom:8px;
+header h1{
+margin:0;
+font-size:30px;
 }
 
-.subtitle{
+header p{
 color:#94a3b8;
+margin:8px 0 15px;
 }
 
 .status{
 display:inline-block;
-margin-top:10px;
-padding:8px 14px;
+padding:8px 15px;
 border-radius:20px;
 background:#12351f;
 color:#4ade80;
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:18px;
-}
-
-.card{
-background:#111827;
-border:1px solid #263247;
-border-radius:16px;
-padding:22px;
-}
-
-.pair{
-font-size:22px;
-font-weight:bold;
-}
-
-.price{
-margin-top:20px;
-color:#cbd5e1;
-}
-
-.signal-box{
-margin-top:20px;
-padding:18px;
-background:#0b1220;
-border-radius:12px;
-text-align:center;
-}
-
-.signal{
-font-size:28px;
-font-weight:bold;
-margin-top:8px;
-}
-
-.buy{color:#22c55e}
-.sell{color:#ef4444}
-.wait{color:#facc15}
-
-button{
-display:block;
-margin:30px auto;
-padding:14px 24px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-size:16px;
-font-weight:bold;
-}
-
-.panel{
-margin-top:35px;
-background:#111827;
-border:1px solid #263247;
-border-radius:16px;
-padding:22px;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:12px;
-}
-
-.stat{
-background:#0b1220;
-padding:18px;
-border-radius:12px;
-text-align:center;
-}
-
-.number{
-font-size:25px;
-font-weight:bold;
-}
-
-.label{
-color:#94a3b8;
-font-size:12px;
-margin-top:5px;
-}
-
-.disclaimer{
-margin-top:30px;
-padding:18px;
-background:#111827;
-border-radius:14px;
-color:#94a3b8;
 font-size:13px;
-text-align:center;
-line-height:1.5;
+font-weight:bold;
 }
+
+.section-title{
+margin-top:30px;
+margin-bottom:15px;
+}
+
 </style>
 
 </head>
@@ -254,52 +69,64 @@ line-height:1.5;
 <div class="container">
 
 <header>
+
 <h1>📈 My Trading Signals</h1>
-<div class="subtitle">Multi-Market Demo Dashboard</div>
-<div class="status">● System Online</div>
+
+<p>Professional Demo Signal Dashboard</p>
+
+<div class="status">
+● SYSTEM ONLINE
+</div>
+
 </header>
 
-<div class="cards" id="markets"></div>
+<h2 class="section-title">
+🌍 Markets
+</h2><div id="markets" class="markets"></div>
 
-<button onclick="loadMarkets()">🔄 Refresh Market Data</button>
+<button onclick="loadMarkets()">
+🔄 Refresh Market Data
+</button>
 
 <div class="panel">
 
 <h2>🧪 Demo Strategy Tester</h2>
 
-<p style="color:#94a3b8;">
-This is a software-testing simulation using random demo data.
+<p>
+Test the demo signal system using randomly generated data.
 </p>
 
-<button onclick="runTest()">▶ Run Demo Test</button>
+<button onclick="runTest()">
+▶ Run Demo Test
+</button>
 
 <div class="stats">
 
 <div class="stat">
-<div class="number" id="tests">0</div>
-<div class="label">Tests</div>
+<strong id="tests">0</strong>
+<span>Tests</span>
 </div>
 
 <div class="stat">
-<div class="number buy" id="buys">0</div>
-<div class="label">BUY</div>
+<strong id="buys">0</strong>
+<span>BUY</span>
 </div>
 
 <div class="stat">
-<div class="number sell" id="sells">0</div>
-<div class="label">SELL</div>
+<strong id="sells">0</strong>
+<span>SELL</span>
 </div>
 
 <div class="stat">
-<div class="number wait" id="waits">0</div>
-<div class="label">WAIT</div>
+<strong id="waits">0</strong>
+<span>WAIT</span>
 </div>
 
 </div>
 
-<p id="result">
+<div id="result">
 No demo test has been run yet.
-</p>
+</div>
 
 </div>
 
@@ -307,12 +134,158 @@ No demo test has been run yet.
 
 ⚠️ <strong>Educational Demo</strong><br>
 
-This website is for software-testing and educational purposes.
-The signals are not financial advice or recommendations to buy or sell.
+This dashboard is for software testing and educational purposes.
+Demo signals are not financial advice or recommendations.
 
 </div>
 
-</div>
+</div><style>
+
+.markets{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:16px;
+}
+
+.card{
+background:#101827;
+border:1px solid #263247;
+border-radius:18px;
+padding:20px;
+}
+
+.pair{
+font-size:22px;
+font-weight:bold;
+}
+
+.market-name{
+color:#64748b;
+font-size:12px;
+margin-top:5px;
+}
+
+.signal-box{
+margin-top:18px;
+padding:18px;
+background:#080f1c;
+border-radius:14px;
+text-align:center;
+}
+
+.signal-label{
+color:#94a3b8;
+font-size:11px;
+}
+
+.signal{
+font-size:27px;
+font-weight:bold;
+margin-top:7px;
+}
+
+.buy{
+color:#22c55e;
+}
+
+.sell{
+color:#ef4444;
+}
+
+.wait{
+color:#facc15;
+}
+
+.price{
+margin-top:15px;
+color:#cbd5e1;
+}
+
+.time{
+margin-top:7px;
+color:#64748b;
+font-size:12px;
+}
+
+button{
+display:block;
+margin:25px auto;
+padding:13px 22px;
+border:0;
+border-radius:12px;
+background:#2563eb;
+color:white;
+font-size:15px;
+font-weight:bold;
+}
+
+.panel{
+margin-top:30px;
+background:#101827;
+border:1px solid #263247;
+border-radius:18px;
+padding:20px;
+}
+
+.panel p{
+color:#94a3b8;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-top:20px;
+}
+
+.stat{
+background:#080f1c;
+border-radius:12px;
+padding:15px;
+text-align:center;
+}
+
+.stat strong{
+display:block;
+font-size:24px;
+}
+
+.stat span{
+color:#94a3b8;
+font-size:11px;
+}
+
+#result{
+margin-top:20px;
+color:#cbd5e1;
+line-height:1.5;
+}
+
+.disclaimer{
+margin-top:30px;
+padding:18px;
+background:#101827;
+border:1px solid #263247;
+border-radius:15px;
+color:#94a3b8;
+font-size:13px;
+line-height:1.5;
+text-align:center;
+}
+
+@media(max-width:600px){
+
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+header h1{
+font-size:26px;
+}
+
+}
+
+</style>
 
 <script>
 
@@ -337,28 +310,54 @@ return "SELL";
 }
 
 return "WAIT";
+
 }
+
+function signalClass(signal){
+
+if(signal === "BUY"){
+return "buy";
+}
+
+if(signal === "SELL"){
+return "sell";
+}
+
+return "wait";
+
+}
+
+</script><script>
 
 function loadMarkets(){
 
 const container =
 document.getElementById("markets");
 
-container.innerHTML = "";
+container.innerHTML="";
 
 markets.forEach(function(market,index){
 
 const card =
 document.createElement("div");
 
-card.className = "card";
+card.className="card";
 
-card.innerHTML = `
-<div class="pair">${market[0]}</div>
+card.innerHTML=`
+
+<div class="pair">
+${market[0]}
+</div>
+
+<div class="market-name">
+Forex Reference Market
+</div>
 
 <div class="signal-box">
 
-<div>DEMO SIGNAL</div>
+<div class="signal-label">
+DEMO SIGNAL
+</div>
 
 <div id="signal${index}" class="signal wait">
 Loading...
@@ -369,29 +368,34 @@ Loading...
 <div id="price${index}" class="price">
 Reference Price: Loading...
 </div>
+
+<div id="time${index}" class="time">
+Checking market data...
+</div>
+
 `;
 
 container.appendChild(card);
 
 fetch(
 "https://api.frankfurter.dev/v2/rate/"
-+ market[1] + "/" + market[2]
++market[1]+"/"+market[2]
 )
 
 .then(function(response){
+
+if(!response.ok){
+throw new Error("Rate unavailable");
+}
+
 return response.json();
+
 })
 
 .then(function(data){
 
 const signal =
 getSignal(data.rate);
-
-document.getElementById(
-"price"+index
-).textContent =
-"Reference Price: "
-+ data.rate.toFixed(5);
 
 const signalElement =
 document.getElementById(
@@ -402,26 +406,36 @@ signalElement.textContent =
 signal;
 
 signalElement.className =
-"signal " +
-(signal === "BUY"
-? "buy"
-: signal === "SELL"
-? "sell"
-: "wait");
+"signal "+signalClass(signal);
+
+document.getElementById(
+"price"+index
+).textContent =
+"Reference Price: "+
+data.rate.toFixed(5);
+
+document.getElementById(
+"time"+index
+).textContent =
+"Reference date: "+data.date;
 
 })
 
 .catch(function(){
 
 document.getElementById(
+"signal"+index
+).textContent="WAIT";
+
+document.getElementById(
 "price"+index
-).textContent =
+).textContent=
 "Reference rate unavailable.";
 
 document.getElementById(
-"signal"+index
-).textContent =
-"WAIT";
+"time"+index
+).textContent=
+"Try refreshing later.";
 
 });
 
@@ -431,9 +445,9 @@ document.getElementById(
 
 function runTest(){
 
-let buy = 0;
-let sell = 0;
-let wait = 0;
+let buy=0;
+let sell=0;
+let wait=0;
 
 for(let i=0;i<100;i++){
 
@@ -443,11 +457,11 @@ const price =
 const signal =
 getSignal(price);
 
-if(signal === "BUY"){
+if(signal==="BUY"){
 buy++;
 }
 
-else if(signal === "SELL"){
+else if(signal==="SELL"){
 sell++;
 }
 
@@ -457,21 +471,26 @@ wait++;
 
 }
 
-document.getElementById("tests")
-.textContent = "100";
+document.getElementById(
+"tests"
+).textContent=100;
 
-document.getElementById("buys")
-.textContent = buy;
+document.getElementById(
+"buys"
+).textContent=buy;
 
-document.getElementById("sells")
-.textContent = sell;
+document.getElementById(
+"sells"
+).textContent=sell;
 
-document.getElementById("waits")
-.textContent = wait;
+document.getElementById(
+"waits"
+).textContent=wait;
 
-document.getElementById("result")
-.textContent =
-"Demo test completed. These numbers are randomly generated and do not represent real trading performance.";
+document.getElementById(
+"result"
+).textContent=
+"Demo test completed. The results use randomly generated data and do not represent real trading performance.";
 
 }
 
@@ -482,4 +501,3 @@ loadMarkets();
 </body>
 
 </html>
-     
